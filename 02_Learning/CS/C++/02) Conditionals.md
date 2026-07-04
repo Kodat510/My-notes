@@ -37,3 +37,18 @@ else if (Condition 5) {
 }
 // =================================================
 ```
+
+# Else if statement:-
+
+- The Else if statement is used to improve performance in C++ code.
+- The Else if statement won't execute if the initial 'if' condition is true.
+- When multiple 'if' conditions are present, each one will be checked.
+- The checking of 'if' conditions is regardless of whether the preceding conditions are true or not.
+- This means that every 'if' condition will be evaluated, even if a previous condition has already been met.
+
+# Else statement:-
+
+- The else statement is mainly used for scenarios that the if condition or the else if condition did not capture.
+- Its scope is wide, covering everything that is not included in the if or else if conditions.
+- It is mostly used for basic cases of error handling.
+- It is also used for handling unexpected [[01) Input & Output|inputs]] that are not accounted for by the if or else if conditions.
