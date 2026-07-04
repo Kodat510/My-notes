@@ -1,3 +1,10 @@
+---
+tags:
+  - CPP
+  - CS
+  - Programming
+author: Kodat510
+---
 # Operators in `if` Statements (C++)
 
 `if` blocks evaluate a **condition** that must resolve to something convertible to `bool` (`true`/`false`, or `0`/nonzero for numeric types, or non-null for pointers). This file covers every category of operator you'll use to build those conditions.
