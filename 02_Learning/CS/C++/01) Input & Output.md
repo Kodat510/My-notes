@@ -5,9 +5,6 @@ tags:
   - CS
 author: Kodat510
 ---
-
-
-
 # C++ Master Syntax Cheat Sheet
 **Category:** Language Specification / Memory Mechanics
 **System Targets:** Bare-Metal Architecture, Embedded Firmware (Arduino), High-Performance Pipelines
