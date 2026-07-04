@@ -45,13 +45,12 @@ main.cpp        <- uses the functions
 **math_utils.h**
 
 ```cpp
-#ifndef MATH_UTILS_H
-#define MATH_UTILS_H
+# pragma once
 
 int add(int a, int b);
 int multiply(int a, int b);
 
-#endif
+
 ```
 
 **math_utils.cpp**
