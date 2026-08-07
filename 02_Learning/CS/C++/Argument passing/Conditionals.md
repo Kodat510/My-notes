@@ -1,3 +1,5 @@
+
+
 ---
 tags:
   - CPP
@@ -54,8 +56,6 @@ if (x = 10) {   // BUG: assigns 10 to x, then evaluates as true (nonzero)
 }
 ```
 
-Some compilers warn about this; if unsure, write the comparison as `10 == x` so an accidental `=` becomes a compile error instead of a silent bug.
-
 ---
 
 ## 2. Logical Operators
@@ -85,60 +85,11 @@ if (!hasLicense) {
 }
 ```
 
-### Short-Circuit Evaluation
-
-`&&` and `||` **stop evaluating as soon as the result is known**. This matters both for performance and for safety.
-
-```cpp
-// Safe: if ptr is nullptr, the left side is false, so *ptr is NEVER evaluated
-if (ptr != nullptr && *ptr > 0) {
-    // ...
-}
-
-// Safe: if isValid() is false, expensiveCheck() never runs
-if (isValid() && expensiveCheck()) {
-    // ...
-}
-```
-
-This pattern (null/guard check first, real check second) is extremely common — order matters.
-
 ---
 
-## 3. Combining Relational + Logical Operators
+## 3. Bitwise Operators (Not the Same as Logical!)
 
-You'll typically nest these together for real conditions.
-
-```cpp
-int temperature = 30;
-bool isRaining = false;
-
-if ((temperature > 25 && temperature < 35) && !isRaining) {
-    std::cout << "Good day for a run";
-}
-```
-
-**Operator precedence** (highest to lowest, for the operators covered here):
-
-1. `!` (NOT)
-2. `<`, `<=`, `>`, `>=`
-3. `==`, `!=`
-4. `&&`
-5. `||`
-
-Because relational operators bind tighter than `&&`/`||`, you often don't strictly need parentheses — but use them anyway for readability:
-
-```cpp
-// Technically equivalent, but the parenthesized version is clearer
-if (a > 5 && b < 10)
-if ((a > 5) && (b < 10))
-```
-
----
-
-## 4. Bitwise Operators (Not the Same as Logical!)
-
-These operate on individual bits, not on the boolean truth-value of an expression. They're a common source of bugs when confused with `&&`/`||`.
+Operate on individual bits, not on the boolean truth-value of an expression.
 
 |Operator|Meaning|
 |:-:|---|
@@ -158,18 +109,11 @@ if (flags & mask) {       // bitwise AND — checks if that bit is set
 }
 ```
 
-`&` and `&&` are **not interchangeable**: `&` does not short-circuit, and it works bit-by-bit on integers rather than treating the whole expression as one truth value.
-
-```cpp
-if (a & b) { ... }   // bitwise AND on integer values, no short-circuit
-if (a && b) { ... }  // logical AND on truthiness, short-circuits
-```
-
 ---
 
-## 5. The Ternary (Conditional) Operator `?:`
+## 4. Ternary (Conditional) Operator `?:`
 
-Not an `if` block itself, but a compact expression-level alternative for simple cases.
+Compact expression-level alternative for simple cases.
 
 ```cpp
 int a = 5, b = 10;
@@ -178,24 +122,11 @@ int max = (a > b) ? a : b;
 std::cout << (score >= 60 ? "Pass" : "Fail");
 ```
 
-Equivalent to:
-
-```cpp
-int max;
-if (a > b) {
-    max = a;
-} else {
-    max = b;
-}
-```
-
-Best used for simple value selection, not for complex branching logic.
-
 ---
 
-## 6. Implicit Conversions in Conditions
+## 5. Implicit Conversions in Conditions
 
-Any expression convertible to `bool` can sit in an `if`, not just relational/logical results.
+Any expression convertible to `bool` can sit in an `if`.
 
 ```cpp
 int count = 0;
@@ -207,78 +138,38 @@ int* ptr = nullptr;
 if (ptr) {              // false, since nullptr converts to false
     // ...
 }
-
-std::string s = "hi";
-if (!s.empty()) {       // .empty() returns bool directly
-    // ...
-}
 ```
-
-|Type|Falsy value|Truthy values|
-|---|---|---|
-|Integer types|`0`|any nonzero value|
-|Pointers|`nullptr` / `0`|any non-null address|
-|`bool`|`false`|`true`|
-|`std::string`/containers|(no implicit bool conversion — use `.empty()`)|—|
 
 ---
 
-## 7. `if` with Initializer (C++17)
+## Practice Problems
 
-Lets you scope a variable to just the `if`/`else` chain — useful to avoid leaking helper variables into the outer scope.
+### Problem 1
+Write a condition that incorrectly uses `=` instead of `==`. Explain why it fails.
 
 ```cpp
-if (auto it = myMap.find(key); it != myMap.end()) {
-    std::cout << it->second;
+int a = 5;
+if (a = 5) { ... }  // Fill in the blank
+```
+
+### Problem 2
+Rewrite the following condition to use short-circuit evaluation safely:
+```cpp
+if (ptr != nullptr && *ptr > 100) { ... }
+```
+
+### Problem 3
+Use a bitwise operator to check if the third bit is set in `flags = 0b1011`.
+
+### Problem 4
+Convert this `if` block to a ternary expression:
+```cpp
+if (temperature > 30) {
+    mode = "Heat";
 } else {
-    std::cout << "Not found";
-}
-// 'it' does not exist here
-```
-
----
-
-## 8. `switch` as an Alternative
-
-When you're comparing one variable against many discrete values with `==`, a `switch` is often cleaner than a long `if`/`else if` chain.
-
-```cpp
-switch (grade) {
-    case 'A':
-        std::cout << "Excellent";
-        break;
-    case 'B':
-        std::cout << "Good";
-        break;
-    default:
-        std::cout << "Needs improvement";
+    mode = "Cool";
 }
 ```
 
-`switch` only supports equality against integral/enum/char constants — it cannot express ranges (`score >= 90`) or arbitrary boolean logic the way `if` can.
-
----
-
-## Quick Reference Table
-
-|Category|Operators|Short-circuits?|Produces|
-|---|---|:-:|---|
-|Relational|`== != > < >= <=`|N/A|`bool`|
-|Logical|`&& \| !`|Yes (`&&`, `\|`)|`bool`|
-|Bitwise|`& \| ^ ~ << >>`|No|integer|
-|Ternary|`?:`|N/A (only one branch evaluated)|value of either branch|
-
----
-
-## Common Pitfalls
-
-1. **`=` vs `==`** — assignment inside a condition compiles and silently does the wrong thing.
-2. **`&`/`|` vs `&&`/`||`** — bitwise operators don't short-circuit and operate bit-by-bit, not on overall truthiness.
-3. **Comparing floating-point values with `==`** — due to rounding error, prefer a tolerance check:
-    
-    ```cpp
-    if (std::abs(a - b) < 1e-9) { /* "equal enough" */ }
-    ```
-    
-4. **Forgetting short-circuit order matters** — always put the guard/null-check condition first in `&&` chains.
-5. **Dangling `if` without braces** — only the very next statement belongs to the `if`; missing braces around multi-line blocks is a classic bug source. Always use `{}` even for single statements.
+### Problem 5
+What is falsy in C++? Identify which of these are falsy: `0`, `nullptr`, `false`, `5`, `std::string("")`.

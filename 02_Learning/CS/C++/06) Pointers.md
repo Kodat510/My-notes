@@ -159,7 +159,7 @@ Without the double pointer, the function would only receive a _copy_ of `myPtr` 
 
 ---
 
-## Quick Reference
+## 8. Quick Reference
 
 |Concept|Analogy|
 |---|---|
@@ -173,7 +173,7 @@ Without the double pointer, the function would only receive a _copy_ of `myPtr` 
 
 ---
 
-## Common Pitfalls
+## 9. Common Pitfalls
 
 1. **Dereferencing `nullptr` or an uninitialized pointer** — like trying to visit an address that doesn't exist; causes crashes or undefined behavior.
 2. **Dangling pointers** — a pointer that still holds an address after the house at that address has been destroyed (e.g. after `delete`). The sticky note is still there, but the house is gone.
@@ -184,3 +184,24 @@ Without the double pointer, the function would only receive a _copy_ of `myPtr` 
     
 3. **Confusing `*` in declarations vs. dereferencing** — `int* ptr` declares a pointer type; `*ptr` in an expression dereferences it. Same symbol, different meaning depending on context.
 4. **Memory leaks** — allocating memory with `new` but forgetting `delete` is like getting a new house address and never telling anyone it can be reused — the memory stays "occupied" even though nothing uses it anymore.
+
+## Practice Problems
+
+1. Write a function `void swap(int* a, int* b)` that swaps the values of two integers using pointers. Test it by swapping two variables in `main`.
+
+2. Given the code snippet:
+   ```cpp
+   int* p;
+   allocateAndSet(&p);   // assume allocateAndSet allocates an int and sets its value
+   ```
+   Write the body of `allocateAndSet` so that after the call, `*p` equals 7 and then print `*p`.
+
+3. Identify the bug in the following snippet and explain why it causes undefined behavior:
+   ```cpp
+   int *p;
+   std::cout << *p;
+   ```
+
+4. Using pointer arithmetic, write an expression that accesses the third element of `int arr[5] = {1,2,3,4,5};` without using the index `2`.
+
+5. Explain what happens if you dereference a `nullptr` pointer and describe how to safely check before dereferencing.
