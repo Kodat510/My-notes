@@ -1,3 +1,4 @@
+Текст заметки:
 ---
 tags:
   - CPP
@@ -147,3 +148,19 @@ int main() {
 |`return`|Sends a value back and exits the function|
 |Declaration|Tells the compiler the function exists (signature only)|
 |Definition|The actual implementation|
+
+---
+
+## Practice Problems
+
+1. **Basic Function Definition**: Write a function named `multiply` that takes two `int` parameters and returns their product. Call it from `main()` with values `6` and `7`, then print the result.
+
+2. **Void Function with Parameter**: Create a function called `displayMessage` that takes a `std::string` parameter and prints it to the console. Call it with the string `"Learning C++ is fun!"`.
+
+3. **No Parameters, No Return Value**: Write a function named `showInstructions` that takes no parameters and prints three instructions for using a program. Call it from `main()`.
+
+4. **Default Parameter**: Define a function `power` that takes an `int base` and an `int exponent` with a default value of `2`. It should return `base` raised to the power of `exponent`. Call it once with just the base and once with both arguments.
+
+5. **Declaration and Definition Separation**: Write a program where you declare a function `isEven` at the top of the file (before `main`), define it after `main`, and use it inside `main` to check if the number `10` is even. Print `"Even"` or `"Odd"` accordingly.
+
+---

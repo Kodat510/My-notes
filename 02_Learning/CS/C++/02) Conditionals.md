@@ -5,15 +5,16 @@ tags:
   - Programming
 author: Kodat510
 ---
-# If statement:-
+# If statement
 
 - The if statement works basically the same in Python and C++.
-- When there are 2 if conditions, it will check both of them.
-- The major difference between if and else if is that it won't check an else if when the if condition is satisfied
-- In Python, we use "elif" for multiple conditions, whereas in C++ we use "else if".
-- The "else" keyword functions in the same way in both Python and C++.
-- When there are multiple if and else if conditions we start a new boundary with an if condition
-- If condition 1 is true it will only skip condition 2 for you conditions 4 & 5 are bound to condition 3 
+- When there are two separate `if` statements, **both** conditions are checked independently.
+- The major difference between `if` and `else if` is that `else if` won't be checked if the preceding `if` condition is satisfied.
+- In Python, we use `elif` for multiple conditions, whereas in C++ we use `else if`.
+- The `else` keyword functions the same way in both Python and C++.
+- Starting a new `if` statement begins a new, independent conditional chain.
+- **Example**: If Condition 1 is true, Condition 2 is skipped. However, Conditions 4 & 5 belong to a separate chain (started by Condition 3) and are evaluated independently.
+
 ```cpp
 // ==================== CHAIN A ====================
 if (Condition 1) { 
@@ -38,17 +39,87 @@ else if (Condition 5) {
 // =================================================
 ```
 
-# Else if statement:-
+# Else if statement
 
-- The Else if statement is used to improve performance in C++ code.
-- The Else if statement won't execute if the initial 'if' condition is true.
-- When multiple 'if' conditions are present, each one will be checked.
-- The checking of 'if' conditions is regardless of whether the preceding conditions are true or not.
-- This means that every 'if' condition will be evaluated, even if a previous condition has already been met.
+- The `else if` statement improves performance by skipping unnecessary condition checks once a match is found.
+- An `else if` block executes **only** if all preceding `if` / `else if` conditions in the same chain are false.
+- When multiple independent `if` statements are present (separate chains), **each one is checked** regardless of previous results.
+- Evaluation of independent `if` statements occurs regardless of whether preceding conditions in other chains were true.
 
-# Else statement:-
+# Else statement
 
-- The else statement is mainly used for scenarios that the if condition or the else if condition did not capture.
-- Its scope is wide, covering everything that is not included in the if or else if conditions.
-- It is mostly used for basic cases of error handling.
-- It is also used for handling unexpected [[01) Input & Output|inputs]] that are not accounted for by the if or else if conditions.
+- The `else` statement handles scenarios not captured by the `if` or `else if` conditions in the same chain.
+- Its scope covers all cases not explicitly handled by preceding conditions in that specific chain.
+- Commonly used for default logic, error handling, or handling unexpected [[01) Input & Output|inputs]].
+
+---
+
+# Practice Problems (C++ `if` / `else if` / `else`)
+
+**Scope**: Basic conditional logic, chaining (`else if`), independent chains, and `else` usage. No loops, functions, or complex data structures required.
+
+---
+
+### Problem 1: Grade Classifier (Basic Chaining)
+Write a program that reads an integer `score` (0–100) and prints the letter grade using an `if-else if-else` chain:
+- 90–100: `A`
+- 80–89: `B`
+- 70–79: `C`
+- 60–69: `D`
+- 0–59: `F`
+- Otherwise: `Invalid Score`
+
+**Constraint**: Use a single `if-else if-else` chain.
+
+---
+
+### Problem 2: Independent Checks (Multiple Independent `if`s)
+Write a program that reads an integer `n` and prints messages based on **independent** properties. Check **all** that apply (use separate `if` statements, not `else if`):
+- If divisible by 3: print `"Fizz"`
+- If divisible by 5: print `"Buzz"`
+- If even: print `"Even"`
+- If positive: print `"Positive"`
+
+**Example**: Input `6` → Output: `Fizz`, `Even`, `Positive` (each on new line).
+
+---
+
+### Problem 3: Leap Year Checker (Logical Operators in Condition)
+Write a program that reads a `year` (integer) and prints `"Leap Year"` or `"Common Year"`.
+Rules (Gregorian calendar):
+- Divisible by 400 → Leap Year
+- Divisible by 100 → Common Year
+- Divisible by 4 → Leap Year
+- Otherwise → Common Year
+
+**Constraint**: Implement using a single `if-else if-else` chain with logical operators (`&&`, `||`) allowed inside conditions.
+
+---
+
+### Problem 4: Menu Calculator (Switch-like `if-else if` Chain)
+Simulate a simple calculator menu. Read two doubles `a`, `b` and an integer `op`:
+- `1`: Add (`a + b`)
+- `2`: Subtract (`a - b`)
+- `3`: Multiply (`a * b`)
+- `4`: Divide (`a / b`, check division by zero → print `"Error: Division by zero"`)
+- Other: `"Invalid Operation"`
+
+**Constraint**: Use `if-else if-else` chain. Print result with 2 decimal places for valid ops.
+
+---
+
+### Problem 5: Quadrant & Axis Detector (Compound Conditions)
+Read two integers `x` and `y`. Print the location of the point using **independent `if` statements** (check all that apply):
+- If `x > 0 && y > 0`: print `"Quadrant I"`
+- If `x < 0 && y > 0`: print `"Quadrant II"`
+- If `x < 0 && y < 0`: print `"Quadrant III"`
+- If `x > 0 && y < 0`: print `"Quadrant IV"`
+- If `x == 0 && y == 0`: print `"Origin"`
+- If `x == 0 && y != 0`: print `"Y-Axis"`
+- If `x != 0 && y == 0`: print `"X-Axis"`
+
+**Constraint**: Use **independent `if` statements** (not `else if`) so that points on axes print both axis labels if logic allows (though logic here makes them mutually exclusive, the practice is using independent `if`s).
+
+---
+
+**Compilation Tip**: Compile with `g++ -std=c++17 -Wall -Wextra -pedantic -o prog main.cpp`

@@ -4,6 +4,20 @@ A range-based `for` loop (introduced in C++11) lets you iterate over every eleme
 
 ---
 
+## Practice Problems
+
+1. Given `std::vector<int> nums = {1, 2, 3, 4, 5};`, write a range-based for loop that prints each number doubled (e.g., "2 4 6 8 10").
+
+2. Given `std::string text = "hello";`, write a range-based for loop that prints each character on a separate line.
+
+3. Given `std::vector<std::string> words = {"cat", "dog", "bird"};`, write a range-based for loop using `const auto&` that prints the length of each word.
+
+4. Given `std::vector<int> values = {10, 20, 30};`, write a range-based for loop using `int&` that adds 5 to each element, then prints the modified vector.
+
+5. Given `std::map<std::string, int> scores = {{"Alice", 90}, {"Bob", 85}};`, write a range-based for loop using `auto&` that increases each score by 10 and prints the updated key-value pairs.
+
+---
+
 ## 1. Basic Syntax
 
 ```cpp

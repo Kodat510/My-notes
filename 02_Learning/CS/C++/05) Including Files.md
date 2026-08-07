@@ -1,173 +1,36 @@
----
-tags:
-  - CPP
-  - CS
-  - Programming
-author: Kodat510
----
-# Basics of Including Other Files in C++ (Preprocessor & Headers)
+**Practice Problems (based on the C++ folder content)**
 
-To use functions, classes, or variables defined in another file, C++ relies on the **preprocessor** — a step that runs before actual compilation and handles directives starting with `#`.
+1. **Header Guard Implementation**
+   - Write a header file `utils.h` that declares two functions:
+     ```cpp
+     int add(int a, int b);
+     int multiply(int a, int b);
+     ```
+   - Provide a correct header guard (using `#ifndef`/`#define`/`#endif`) to prevent duplicate inclusion.
+   - Write a source file `utils.cpp` that includes `utils.h` and defines the two functions.
+   - Write a `main.cpp` that includes `utils.h` and calls both functions, printing the results.
+   - Show the exact command you would use with `g++` to compile and link all three files into an executable.
 
----
+2. **Macro vs. constexpr**
+   - Create a header `constants.h` that defines the mathematical constant `PI` using `#define PI 3.14159`.
+   - Write a small program that uses this macro to compute the area of a circle given a radius.
+   - Refactor the program to replace the macro with a `constexpr` variable (or `const` double) and explain why the refactored version is preferable.
 
-## 1. The `#include` Directive
+3. **Conditional Compilation with `#ifdef`**
+   - In a header `debug.h`, wrap a block of code that prints a debug message using `std::cout` with `#ifdef DEBUG`.
+   - In `main.cpp`, demonstrate both scenarios:
+     a) Compile without defining `DEBUG` and show that the debug output is omitted.
+     b) Compile with the compiler flag `-DDEBUG` (or `#define DEBUG` somewhere) and show that the debug output appears.
+   - Provide the exact compilation commands for both cases.
 
-Copies the contents of another file directly into the current file, before compilation happens.
+4. **Including Your Own Header vs. System Header**
+   - Write a simple program that includes a standard library header (e.g., `<iostream>`) using angle brackets and a custom header (e.g., `"myMath.h"`) using quotes.
+   - Explain the difference in search paths and why each syntax is used for its respective type of header.
 
-```cpp
-#include <iostream>      // library header — angle brackets
-#include "myHeader.h"    // your own header — quotes
-```
-
-|Syntax|Used for|
-|---|---|
-|`#include <name>`|Standard library / system headers (`iostream`, `vector`, `string`)|
-|`#include "name.h"`|Your own project headers, found relative to the current file|
-
----
-
-## 2. Why You Can't Just `#include` a `.cpp` File
-
-Splitting code across files normally means:
-
-- A **header file** (`.h` / `.hpp`) — contains **declarations** (function prototypes, class definitions).
-- A **source file** (`.cpp`) — contains **definitions** (the actual implementation).
-
-Example project:
-
-```
-math_utils.h    <- declares functions
-math_utils.cpp  <- defines (implements) functions
-main.cpp        <- uses the functions
-```
-
-**math_utils.h**
-
-```cpp
-# pragma once
-
-int add(int a, int b);
-int multiply(int a, int b);
-
-
-```
-
-**math_utils.cpp**
-
-```cpp
-#include "math_utils.h"
-
-int add(int a, int b) {
-    return a + b;
-}
-
-int multiply(int a, int b) {
-    return a * b;
-}
-```
-
-**main.cpp**
-
-```cpp
-#include <iostream>
-#include "math_utils.h"
-
-int main() {
-    std::cout << add(2, 3) << std::endl;
-    return 0;
-}
-```
-
-`main.cpp` only needs the _declarations_ from `math_utils.h` to compile — the actual code gets linked in later from the compiled `math_utils.cpp`.
-
----
-
-## 3. Header Guards
-
-If a header gets `#include`d twice (directly or indirectly through other headers), the compiler sees duplicate declarations — an error. Header guards prevent this.
-
-```cpp
-#ifndef MATH_UTILS_H   // "if not already defined"
-#define MATH_UTILS_H   // define it now, so next time it's skipped
-
-// header content here
-
-#endif
-```
-
-Modern alternative (supported by all major compilers):
-
-```cpp
-#pragma once
-```
-
-Simpler, but `#ifndef`/`#define`/`#endif` is the traditional, fully portable form.
-
----
-
-## 4. Compiling Multiple Files
-
-With separate `.cpp` files, you compile them together (or separately then link):
-
-```bash
-g++ main.cpp math_utils.cpp -o program
-./program
-```
-
-Each `.cpp` file is compiled into an object file (`.o`), and the **linker** connects calls in `main.cpp` to the actual definitions in `math_utils.cpp`.
-
----
-
-## 5. Other Common Preprocessor Directives
-
-|Directive|Purpose|
-|---|---|
-|`#include`|Insert contents of another file|
-|`#define`|Create a macro (text substitution)|
-|`#ifndef` / `#ifdef` / `#endif`|Conditional compilation (used for header guards, platform-specific code)|
-|`#pragma once`|Modern, simpler header guard|
-
-### `#define` for Constants (older style)
-
-```cpp
-#define PI 3.14159
-
-double area = PI * radius * radius;
-```
-
-In modern C++, prefer `const` or `constexpr` instead — they're type-safe, unlike macros:
-
-```cpp
-constexpr double PI = 3.14159;
-```
-
-### `#ifdef` for Conditional Compilation
-
-```cpp
-#ifdef DEBUG
-    std::cout << "Debug mode active" << std::endl;
-#endif
-```
-
-Code inside only compiles if `DEBUG` has been defined somewhere (e.g. via `#define DEBUG` or a compiler flag like `-DDEBUG`).
-
----
-
-## Quick Reference
-
-|Term|Meaning|
-|---|---|
-|Preprocessor|Runs before compilation, processes `#` directives|
-|Header file (`.h`)|Contains declarations, shared across files|
-|Source file (`.cpp`)|Contains definitions/implementation|
-|`#include <...>`|Include a standard library header|
-|`#include "..."`|Include your own header file|
-|Header guard|Prevents a header from being included more than once|
-|Linker|Connects function calls to their actual definitions across compiled files|
-
----
-
-## Common Pitfall
-
-Forgetting a header guard (or `#pragma once`) causes a **"redefinition" compile error** the moment a header is included from more than one place — which happens more often than expected once files start including each other.
+5. **Multi‑File Project Linking**
+   - Design a small library consisting of:
+     - `matrix.h` – declares a class `Matrix` with a constructor, a method `void set(int row, int col, double val)`, and a method `double get(int row, int col) const`.
+     - `matrix.cpp` – includes `matrix.h` and provides the definitions for the class methods.
+     - `main.cpp` – includes `matrix.h`, creates a `Matrix` object, sets and retrieves values, and prints the result.
+   - Compile and link all files into a single executable using a single `g++` command.
+   - List any additional flags or options you would use to ensure the header is not included multiple times during compilation.
