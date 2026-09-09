@@ -1,1 +1,7 @@
-Vectors are essentially just arrows starting from the origin, each and every vector (atleast in 2D space) can be represented by an unique set of numbers like "[2,-3]" and each and every ordered doublet will only correspond to one vector only, this is the basic definition of what it means to be a vector, either way the thing about vectors is that addition and multiplication with scalars also exist, Vector Addition is particularly interesting  because if we imagine 2 vectors with their tail at origin you need to slide their tail to the head of the other one and draw a line from the origin to the head of the one we have actually moved, it is pretty straightforward you just add the effects of each vector to get the resultant
+Vectors are geometric objects that begin at the origin.  
+In two‑dimensional space they can be uniquely described by an ordered pair of numbers, e.g., `[2, –3]`.  
+Every ordered pair represents a single vector, and each vector has well‑defined operations:
+
+* **Addition** – Place both vectors with their tails at the origin. Slide the second vector so its tail sits at the head of the first, then draw the line from the origin to the head of the second. The resulting vector has components equal to the component‑wise sum of the originals.
+
+* **Scalar multiplication** – Multiply each component by a real number to scale the vector.
